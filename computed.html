@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>计算属性 - Vue Test</title>
+		<script type="text/javascript" src="assets/js/vue.js"></script>
+	</head>
+	
+	<body>
+		<div id="app">
+			<h3>姓名：{{ fullName }}</h3>
+			<h3>身高：{{ heightM }} 米</h3>
+		</div>
+		
+		<script type="text/javascript">			
+			//使用计算属性 - computed
+			//计算属性不能和data中的属性同名，否则会被忽略
+			//计算属性有Setter和Getter
+			var vm = new Vue({
+				el: "#app",
+				data: {
+					firstName: "Michael",
+					lastName: "Jordan",
+					heightCM: 198
+				},
+				computed: {
+					fullName: function() {
+						//this指向当前组件实例
+						return this.firstName + ' ' + this.lastName;
+					},
+					heightM: {
+						set: function(newVal) {
+							this.heightCM = newVal * 100;
+						},
+						get: function() {
+							return (this.heightCM / 100).toFixed(2);
+						}
+					}
+				}
+			});
+		</script>
+	</body>
+</html>

@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>自定义事件的触发与监听 - Vue Test</title>
+		<script type="text/javascript" src="assets/js/vue.js"></script>
+		<style type="text/css"></style>
+	</head>
+	
+	<body>
+		<div id="app">
+			<com-a></com-a>
+			<com-b></com-b>
+		</div>
+		
+		<script type="text/javascript">			
+			/**
+			 * 直接访问组件实例：
+			 * $root: 组件所在的根实例
+			 * $parent: 父组件实例
+			 * $children: 包含所有子组件实例
+			 * $refs.foo: ref属性为foo的子组件
+			 * 以上属性都挂载在组件的this上
+			 * 
+			 * 所有的自定义事件都需要通过$emit、$on、$off来进行触发、监听和取消监听
+			 * 推荐使用集中式的事件管理机制来处理组件之间的通信，而不是依赖于组件本身的结构
+			 * 可以使用一个空的Vue实例来处理简单的事件触发机制，而在复杂场景中则使用Vuex状态管理机制
+			 */
+			
+			//空的Vue实例
+			var eHandler = new Vue();
+			
+			//初始化Vue实例
+			var vm = new Vue({
+				el: "#app",
+				components: {
+					comA: {
+						template: ' <div> \
+										<input type="text" v-model="name" /> \
+										<button @click="addUser">Add User</button> \
+									</div>',
+						data: function() {
+							return {
+								name: ""
+							}
+						},
+						methods: {
+							addUser: function() {
+								eHandler.$emit("add", {name: this.name}); //触发自定义事件
+								this.name = "";
+							}
+						}
+					},
+					comB: {
+						template: ' <ul> \
+										<li v-for="item in items">{{item.name}}</li> \
+									</ul>',
+						data: function() {
+							return {
+								items: []
+							}
+						},
+						mounted: function() { //组件生命周期钩子函数
+							var that = this;
+							eHandler.$on("add", function(data) { //监听自定义事件
+								that.items.push(data);
+							});
+						}
+					}
+				}
+			});
+		</script>
+	</body>
+</html>

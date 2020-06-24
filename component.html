@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>组件及Vue实例的基本用法 - Vue Test</title>
+		<script type="text/javascript" src="assets/js/vue.js"></script>
+	</head>
+	
+	<body>
+		<div id="app">
+			<input v-model="newTodoText"
+				   @keyup.enter="addNewTodo"
+				   placeholder="Add a new todo" />
+			<ul>
+				<li is="todo-item"
+					v-for="(item, index) in items"
+					:key="item.id"
+					:title="item.title"
+					@remove="items.splice(index, 1)"></li>
+			</ul>
+		</div>
+		
+		<script type="text/javascript">
+			//自定义组件
+			Vue.component("todo-item", {
+				props: ["title"],
+				template: "<li>{{title}} <button @click=\"$emit(\'remove\')\">X</button></li>"
+			});
+			
+			//初始化Vue实例
+			var vm = new Vue({
+				el: "#app",
+				data: {
+					newTodoText: "",
+					items: [
+						{id:1, title:"Vue.js"},
+						{id:2, title:"Python"},
+						{id:3, title:"ES6"}
+					],
+					nextItemId: 4
+				},
+				methods: {
+					addNewTodo: function() {
+						this.items.push({
+							id: this.nextItemId++,
+							title: this.newTodoText
+						});
+						this.newTodoText = "";
+					}
+				}
+			});
+		</script>
+	</body>
+</html>

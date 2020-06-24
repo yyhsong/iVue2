@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>Vue-resource的基本使用 - Vue Test</title>
+		<script type="text/javascript" src="assets/js/vue.js"></script>
+		<script type="text/javascript" src="assets/js/vue-resource.js"></script>
+	</head>
+	
+	<body>
+		<div id="app">
+			<ul>
+				<li v-for="msg in messages">
+					<strong>{{ msg.title }}</strong>
+					{{msg.content}}
+				</li>
+			</ul>
+		</div>
+		
+		<script type="text/javascript">			
+			/*
+			 * $http可以直接作为函数使用:
+			 * this.$http({
+			 * 	url: 'api/list',
+			 * 	method: 'POST', //GET POST PUT DELETE等
+			 *  body: {},
+			 *  params: {},
+			 *  headers: {},
+			 *  timeout: 1500, //单位毫秒，0表示没有超时时长
+			 *  before: function(request) {//请求发出前的钩子函数},
+			 * 	progress: function(event) {//上传文件时的进度}
+			 * 	...
+			 * })
+			 * 
+			 * 还可以以this.$http.get(url, options)或Vue.http.get(url, options)的形式调用快捷方法：
+			 * get(url, [options])
+			 * post(url, [options])
+			 * delete(url, [options])
+			 * jsonp(url, [options])
+			 * post(url, [body], [options])
+			 * put(url, [body], [options])
+			 * patch(url, [body], [options])
+			 * 
+			 * response对象的属性及方法：
+			 * url body headers ok status statusText
+			 * text(): 把response body解析为字符串
+			 * json(): 把response body解析为json对象
+			 * blob(): 把response body解析为blob对象，即二进制文件，多用于文件处理
+			 * 
+			 * 拦截器用于在请求发送之前或服务器返回之后对request/response进行拦截修改
+			 * 完成业务逻辑后再传递给下一步骤
+			 */
+			
+			//注册拦截器
+			Vue.http.interceptors.push(function(req, next) {
+				//对request进行修改
+				//req.method = "POST";
+				next(function(resp) {
+					//对response进行修改
+					//resp.body = "...";
+				});
+			});
+			
+			//初始化Vue实例
+			var vm = new Vue({
+				el: "#app",
+				data: {
+					messages: []
+				},
+				beforeMount: function() {
+					this.$http.get("assets/data/messages.json").then(function(resp) {
+						//console.log("Success: ", resp.data);
+						this.messages = resp.data;
+					}, function(resp) {
+						console.log("Fail: ", resp.status, resp.statusText);
+					});
+				}
+			});
+		</script>
+	</body>
+</html>

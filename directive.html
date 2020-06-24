@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>指令基础 - Vue Test</title>
+		<script type="text/javascript" src="assets/js/vue.js"></script>
+	</head>
+	
+	<body>
+		<div id="app">
+			<div v-if="isExist" v-my-directive="param"></div>
+		</div>
+		
+		<script type="text/javascript">			
+			/**
+			 * 数据驱动：通过指令（directive）把数据变化映射为DOM行为，即封装对DOM元素的重复处理行为。
+			 * 内置指令：v-bind v-model v-on v-if/v-else/v-show v-for v-text v-HTML v-el v-ref v-pre v-cloak v-once
+			 * 自定义指令：
+			 * 通过Vue.directive()定义全局指令
+			 * 在组件内使用directives属性定义局部指令，只能被当前组件调用
+			 * 指令定义对象的钩子函数：bind update unbind
+			 * 指令实例属性(Vue2.0已移除指令实例这一概念，通过钩子函数的参数传递)：
+			 * el: 指令绑定的元素
+			 * vm: 指令的上下文ViewModel，可以为Vue的实例，也可以为组件的实例
+			 * name:　指令的名称
+			 * arg: 指令的参数
+			 * expression: 指令的表达式，不包括参数和过滤器
+			 * modifiers: 对象，包含指令的修饰符
+			 * descriptor: 对象，包含指令的解析结果
+			 * 指令的高级选项：params twoWay acceptStatement terminal priority
+			 */
+			
+			//注册指令
+			Vue.directive("my-directive", {
+				bind: function(el, binding, vnode) {
+					console.log("bind ...");
+					console.log("el: ", el);
+					console.log("binding: ", binding);
+					console.log("vnode: ", vnode);
+				},
+				update: function(el, binding, vnode, oldvnode) {
+					console.log("update ...");
+					console.log("el: ", el);
+					console.log("binding: ", binding);
+					console.log("vnode: ", vnode);
+					console.log("oldvnode: ", oldvnode);
+				},
+				//当整个组件都完成了update状态即所有DOM都更新后调用
+				componentUpdated: function(el, binding, vnode, oldvnode) {
+					console.log("componentUpdated ...");
+					console.log("el: ", el);
+					console.log("binding: ", binding);
+					console.log("vnode: ", vnode);
+					console.log("oldvnode: ", oldvnode);
+				},
+				unbind: function(el, binding, vnode) {
+					console.log("unbind ...");
+					console.log("el: ", el);
+					console.log("binding: ", binding);
+					console.log("vnode: ", vnode);
+				}
+			});
+			
+			//初始化Vue实例
+			var vm = new Vue({
+				el: "#app",
+				data: {
+					isExist: true,
+					param: "first"
+				}
+			});
+			
+			//测试语句
+			//vm.param = "second"; //触发update
+			//vm.isExist = false; //触发unbind
+		</script>
+	</body>
+</html>

@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>JavaScript过渡 - Vue Test</title>
+		<script type="text/javascript" src="assets/js/vue.js"></script>
+		<script type="text/javascript" src="assets/js/velocity.js"></script>
+		<style type="text/css">
+			.panel {margin-left:300px;}
+		</style>
+	</head>
+	
+	<body>
+		<div id="app">
+			<div class="panel">
+				<p><button @click="jsShow = !jsShow">Toggle</button></p>
+				<transition 
+					:css="false"
+					@before-enter="beforeEnter"
+					@enter="enter"
+					@after-enter="afterEnter"
+					@enter-cancelled="enterCancelled"
+					@before-leave="beforeLeave"
+					@leave="leave"
+					@after-leave="afterLeave"
+					@leave-cancelled="leaveCancelled">
+					<div v-if="jsShow">
+						<p>JavaScript过渡</p>
+						<p><img src="https://cn.vuejs.org/images/transition.png" style="width:300px;" /></p>
+					</div>
+				</transition>
+			</div>
+		</div>
+		
+		<script type="text/javascript">			
+			/**
+			 * JS过渡是指在过渡钩子函数中直接使用JS来操作DOM，过渡钩子函数包括：
+			 * before-enter enter after-enter enter-cancelled
+			 * before-leave leave after-leave leave-cancelled
+			 * 
+			 * 钩子函数可以结合CSS transition和animation使用，也可以单独使用。
+			 * 当只用JS过渡的时候，在enter和leave中，回调函数done是必须的，否则它们会被同步调用，过渡会立即完成。
+			 * 对仅使用JS过渡的元素添加v-bind:css="false"，会跳过对CSS的检测，避免过渡过程中CSS的影响。
+			 * 
+			 * 在钩子函数中通常结合第三方JS动画库使用，如Velocity.js
+			 */
+			
+			//初始化Vue实例
+			var vm = new Vue({
+				el: "#app",
+				data: {
+					jsShow: false
+				},
+				methods: {
+					beforeEnter: function (el) {
+						console.log("before-enter ...");
+				      	el.style.opacity = 0;
+				      	el.style.transformOrigin = 'left';
+				    },
+				    enter: function (el, done) {
+				    	console.log("enter ...");
+				      	Velocity(el, { opacity: 1, fontSize: '2em' }, { duration: 300 });
+				      	Velocity(el, { fontSize: '1em' }, { complete: done });
+				    },
+				    afterEnter: function(el) {
+				    	console.log("after-enter ...");
+				    },
+				    enterCancelled: function(el) {
+				    	console.log("enter-cannelled ...");
+				    },
+				    beforeLeave: function(el) {
+				    	console.log("before-leave ...");
+				    },
+				    leave: function (el, done) {
+				    	console.log("leave ...");
+				      	Velocity(el, { translateX: '15px', rotateZ: '50deg' }, { duration: 600 })
+				      	Velocity(el, { rotateZ: '100deg' }, { loop: 2 });
+				      	Velocity(el, {
+				        	rotateZ: '45deg',
+				        	translateY: '30px',
+				        	translateX: '30px',
+				        	opacity: 0
+				      	}, { complete: done })
+				    },
+				    afterLeave: function(el) {
+				    	console.log("after-leave ...");
+				    },
+				    leaveCancelled: function(el) {
+				    	console.log("leave-cannelled ...");
+				    }
+				}
+			});
+		</script>
+	</body>
+</html>

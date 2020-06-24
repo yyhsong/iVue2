@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>理解状态管理模式 - Vue Test</title>
+		<script type="text/javascript" src="assets/js/vue.js"></script>
+	</head>
+	
+	<body>
+		<img src="https://vuex.vuejs.org/vuex.png" />
+		
+		<div id="app"></div>
+		
+		<script type="text/javascript">
+			/**
+			 * Vuex是专门为Vue.js应用程序开发的状态管理模式。
+			 * Vuex采用集中式存储管理应用的所有组件的状态，并以相应的规则保证状态以一种可预测的方式发生变化。
+			 * Vuex适用于中大型单页应用，小型应用可使用简单的store模式。
+			 */
+			
+			//理解"状态管理模式"
+			var vm = new Vue({
+				el: '#app',
+				//state，驱动应用的数据源
+				data() {
+					return {
+						count: 0
+					}
+				},
+				//view，以声明方式将state映射到视图
+				template: '<div>{{ count }}</div>',
+				//actions，响应在view上的用户输入导致的状态变化
+				methods: {
+					increment() {
+						this.count++;
+					}
+				}
+			});
+		</script>
+	</body>
+</html>

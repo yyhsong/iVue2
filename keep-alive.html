@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>动态组件 - Vue Test</title>
+		<script type="text/javascript" src="assets/js/vue.js"></script>
+		<style type="text/css">
+			.links {margin:0;padding:0;}
+			.links li {list-style:none;display:inline-block;margin-right:10px;padding:10px;
+						background:darkseagreen;cursor:pointer;}
+			.tab {margin-top:15px;width:400px;height:300px;border:1px solid green;}
+		</style>
+	</head>
+	
+	<body>
+		<div id="app">
+			<ul class="links">
+				<li @click="currentTab = 'home'">Home</li>
+				<li @click="currentTab = 'list'">List</li>
+				<li @click="currentTab = 'detail'">Detail</li>
+			</ul>
+			
+			<keep-alive>
+				<component :is="currentTab"></component>
+			<keep-alive>
+		</div>
+		
+		<script type="text/javascript">			
+			/**
+			 * 动态组件：即多个组件使用同一挂载点，根据条件来切换不同的组件，常用于路由控制和Tab切换
+			 * <keep-alive>标签将切换出去的组件保留在内存中，避免重新渲染
+			 * activated: 钩子函数，组件激活时调用，常用于动态组件切换
+			 */
+			
+			//初始化Vue实例
+			var vm = new Vue({
+				el: "#app",
+				data: {
+					currentTab: "home"
+				},
+				components: {
+					home: {
+						template: ' <div class="tab"> \
+										<input type="text" value="this is home tab" \> \
+									</div>'
+					},
+					list: {
+						template: ' <div class="tab"> \
+										<ul> \
+											<li v-for="item in items">{{item}}</li> \
+										</ul> \
+									</div>',
+						data: function() {
+							return {
+								items: []
+							}
+						},
+						activated: function() { //钩子函数
+							var that = this;
+							//模拟ajax请求
+							setTimeout(function() {
+								that.items = ['This', 'is', 'list', 'tab'];
+							}, 1000);
+						}
+					},
+					detail: {
+						template: '<div class="tab">This is detail tab</div>'
+					}
+				}
+			});
+		</script>
+	</body>
+</html>

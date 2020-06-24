@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>组件注册及选项 - Vue Test</title>
+		<script type="text/javascript" src="assets/js/vue.js"></script>
+		<style type="text/css">
+		</style>
+	</head>
+	
+	<body>
+		<div id="app">
+			<global-component></global-component>
+		</div>
+		
+		<script type="text/javascript">			
+			/**
+			 * 组件系统：自定义Tag及对HTML进行扩展
+			 * 组件构造：Vue.extend()
+			 * 组件注册：全局注册Vue.component()及局部注册components
+			 * 全局注册必须在根实例初始化之前注册，这样组件才能在任意实例中被使用
+			 * 
+			 * 组件选项：
+			 * data: 通过函数返回新对象，避免多个组件实例共享一个data对象
+			 * props: 
+			 * 组件实例的作用域是孤立的，通过props将父组件的值传递给子组件，而且是单向传递
+			 * prop: { //props验证
+			 * 	type: [Boolean, Number, String, Array, Function, Object], //类型检测，null表示任意类型
+			 * 	required: true, //是否必须
+			 * 	default: function() { //默认值如果为数组或对象，需要以函数返回值的形式
+			 * 		return {foo: "bar"};
+			 * 	},
+			 *	validator: function(val) { //自定义验证函数
+			 * 		return ...
+			 * 	}
+			 * }
+			 */
+			
+			//组件构造
+			var childCom = Vue.extend({
+				template: "<p>This is a child component.</p>"
+			});
+			var globalCom = Vue.extend({
+				template: " <div> \
+								<h3>This is a global component.</h3> \
+								<child-component></child-component> \
+							</div>",
+				components: {
+					'child-component' : childCom
+				}
+			});
+			
+			//组件注册
+			Vue.component("global-component", globalCom);
+			
+			//初始化Vue实例
+			var vm = new Vue({
+				el: "#app",
+				data: {}
+			});
+		</script>
+	</body>
+</html>

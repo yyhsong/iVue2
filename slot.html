@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>内容分发slot - Vue Test</title>
+		<script type="text/javascript" src="assets/js/vue.js"></script>
+		<style type="text/css"></style>
+	</head>
+	
+	<body>
+		<div id="app">
+			<slot-com>
+				<h3 slot="title">{{dTitle}}</h3>
+				<p slot="content">{{dContent}}</p>
+			</slot-com>
+		</div>
+		
+		<script type="text/javascript">			
+			/**
+			 * 内容分发：混合父组件内容和子组件模板
+			 * 默认slot：不需要name值，找不到匹配的回退插槽
+			 * 父组件模板的内容在父组件作用域内编译，子组件模板的内容在子组件模板内编译
+			 * 不支持多个相同slot属性的DOM插入到对应的slot标签中，一个slot只被使用一次
+			 * slot标签不再保存自身的属性及样式，均由父元素或被插入的元素提供样式和属性
+			 */
+			
+			//slot组件，子元素包含slot属性
+			Vue.component("slot-com", {
+				template: ' <div class="panel"> \
+								<div class="panel-header"> \
+									<slot name="title"></slot> \
+								</div> \
+								<div class="panel-content"> \
+									<slot name="content"></slot> \
+								</div> \
+								<div class="panel-footer"> \
+									<slot></slot> \
+								</div> \
+						    </div>'
+			});
+			
+			//初始化Vue实例
+			var vm = new Vue({
+				el: "#app",
+				data: {
+					dTitle: "This is title",
+					dContent: "This is content"
+				}
+			});
+		</script>
+	</body>
+</html>
