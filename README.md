@@ -1,2 +1,3 @@
 # iVue2
-Vue 2.x 入门
+
+Vue2 入门
