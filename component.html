@@ -2,16 +2,16 @@
 
 <html>
 	<head>
-		<meta charset="UTF-8">
-		<title>组件及Vue实例的基本用法 - Vue Test</title>
-		<script type="text/javascript" src="assets/js/vue.js"></script>
+		<meta charset="UTF-8" />
+		<title>组件的基本应用 - iVue2</title>
+		<script type="text/javascript" src="assets/js/vue.min.js"></script>
 	</head>
 	
 	<body>
 		<div id="app">
 			<input v-model="newTodoText"
 				   @keyup.enter="addNewTodo"
-				   placeholder="Add a new todo" />
+				   placeholder="Add a new todo item" />
 			<ul>
 				<li is="todo-item"
 					v-for="(item, index) in items"
@@ -22,6 +22,13 @@
 		</div>
 		
 		<script type="text/javascript">
+            //自定义组件
+            // const todoItem = Vue.extend({
+            //     props: ["title"],
+			// 	template: "<li>{{title}} <button @click=\"$emit(\'remove\')\">X</button></li>"
+            // });
+            // Vue.component('todo-item', todoItem);
+
 			//自定义组件
 			Vue.component("todo-item", {
 				props: ["title"],
@@ -35,7 +42,7 @@
 					newTodoText: "",
 					items: [
 						{id:1, title:"Vue.js"},
-						{id:2, title:"Python"},
+						{id:2, title:"JavaScript"},
 						{id:3, title:"ES6"}
 					],
 					nextItemId: 4
