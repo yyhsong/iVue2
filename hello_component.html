@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+
+<html>
+	<head>
+		<meta charset="UTF-8" />
+		<title>Hello Component - iVue2</title>
+		<script type="text/javascript" src="assets/js/vue.min.js"></script>
+	</head>
+	
+	<body>
+		<div id="app">
+			<hello v-bind:msg="message"></hello>
+		</div>
+		
+		<script type="text/javascript">
+            // 一切皆是组件
+            // 注册组件需要在Vue实例化之前
+            Vue.component("hello", {
+                props: ["msg"],
+                template: "<h1>{{ msg }}</h1>"
+            });
+
+            // 实例化Vue对象
+            var vm = new Vue({
+                el: "#app",
+                data: {
+                    message: "Hello Component"
+                }
+            });
+		</script>
+	</body>
+</html>
