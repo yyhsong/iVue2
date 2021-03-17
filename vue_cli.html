@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+
+<html>
+	<head>
+		<meta charset="UTF-8" />
+		<title>vue-cli的基本使用 - iVue2</title>
+		<script type="text/javascript" src="assets/js/vue.min.js"></script>
+	</head>
+	
+	<body>
+		<div id="app">
+            <h3>vue-cli的基本用法</h3>
+            <dl>
+                <dt>全局安装vue-cli</dt>
+                <dd>npm install -g vue-cli</dd>
+                <dt>初始化脚手架程序</dt>
+                <dd>vue init &lt; template-name &gt; &lt; project-name &gt;</dd>
+                <dt>进入项目目录</dt>
+                <dd>cd &lt; project-name &gt;</dd>
+                <dt>安装依赖</dt>
+                <dd>npm install</dd>
+                <dt>启动应用</dt>
+                <dd>npm run dev</dd>
+                <dt>编译项目</dt>
+                <dd>npm run build</dd>
+            </dl>
+        </div>
+		
+		<script type="text/javascript">			
+			/*
+			 * vue-cli Vue官方脚手架程序生成工具
+			 * 全局安装：npm install -g vue-cli
+			 * 执行 vue init <template-name> <project-name> 进行脚手架的安装
+			 * <template-name>脚手架类型：
+			 * webpack: 基于webpack和vue-loader的目录结构，支持热部署、代码检查、测试及CSS抽取
+			 * webpack-simple: 基于webpack和vue-loader的目录结构
+			 * pwa
+			 * browerify
+			 * browerify-simple
+			 * simple: 单个引入vue.js的index.html页面
+			 * 
+			 * 常用命令：
+			 * 1. npm install -g vue-cli
+			 * 2. vue init webpack my-project
+			 * 3. cd my-project
+			 * 4. npm install
+			 * 5. npm run dev
+			 * 
+			 * npm run build
+			 */
+			
+			//初始化Vue实例
+			var vm = new Vue({
+				el: "#app",
+				data: {}
+			});
+		</script>
+	</body>
+</html>
