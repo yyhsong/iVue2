@@ -9,13 +9,13 @@
 	
 	<body>
 		<div id="app">
-			<h3>{{ total }}</h3>
+			<h1>{{ total }}</h1>
 			<button-counter v-on:increment="incrementTotal"></button-counter>
 			<button-counter v-on:increment="incrementTotal"></button-counter>
 		</div>
 		
 		<script type="text/javascript">
-			//注册组件，在初始化Vue实例之前
+			//注册组件
 			Vue.component("button-counter", {
 				template: "<button v-on:click='incrementCounter'>{{counter}}</button>",
 				data: function() { //组件中的data必须为函数形式，避免多个组件实例共用一个data对象
