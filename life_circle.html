@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+
+<html>
+	<head>
+		<meta charset="UTF-8" />
+		<title>Vue实例的生命周期 - iVue2</title>
+		<script type="text/javascript" src="assets/js/vue.min.js"></script>
+	</head>
+	
+	<body>
+		<div id="app">
+			<h3>{{ message }}</h3>
+			<img src="https://cn.vuejs.org/images/lifecycle.png" style="width:500px;" />
+		</div>
+		
+		<script type="text/javascript">			
+			//生命周期钩子函数
+			var vm = new Vue({
+				el: "#app",
+				data: {
+					message: "Vue实例的生命周期"
+				},
+				beforeCreate: function() {
+					console.log("beforeCreate ...");
+				},
+				created: function() {
+					console.log("created ...");
+				},
+				beforeMount: function() {
+					console.log("beforeMount ...");
+				},
+				mounted: function() {
+					console.log("mounted ...")
+				},
+				beforeUpdate: function() {
+					console.log("beforeUpdate ...");
+				},
+				updated: function() {
+					console.log("updated ...");
+					vm.$destroy(); //触发destroy
+				},
+				beforeDestroy: function() {
+					console.log("beforeDestroy ...");
+				},
+				destroyed: function() {
+					console.log("destroyed ...");
+				}
+			});
+			
+			//调用Vue实例的全局属性或方法
+			vm.$data.message = "Vue实例的生命周期钩子"; //data改变时，触发update
+		</script>
+	</body>
+</html>
