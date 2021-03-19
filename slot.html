@@ -3,22 +3,28 @@
 <html>
 	<head>
 		<meta charset="UTF-8">
-		<title>内容分发slot - Vue Test</title>
-		<script type="text/javascript" src="assets/js/vue.js"></script>
-		<style type="text/css"></style>
+		<title>内容分发slot - iVue2</title>
+		<script type="text/javascript" src="assets/js/vue.min.js"></script>
+        <style type="text/css">
+            * {margin:0;padding:0;}
+            .panel {width:400px;border:1px solid #ccc;}
+            .panel-header {padding:15px;border-bottom:1px solid #ccc;}
+            .panel-content {padding:15px;height:200px;}
+            .panel-footer {padding:15px;border-top:15px;}
+        </style>
 	</head>
 	
 	<body>
 		<div id="app">
 			<slot-com>
-				<h3 slot="title">{{dTitle}}</h3>
-				<p slot="content">{{dContent}}</p>
+				<h3 slot="title">{{ dTitle }}</h3>
+				<p slot="content">{{ dContent }}</p>
 			</slot-com>
 		</div>
 		
 		<script type="text/javascript">			
 			/**
-			 * 内容分发：混合父组件内容和子组件模板
+			 * 内容分发：混合父组件模板和子组件内容
 			 * 默认slot：不需要name值，找不到匹配的回退插槽
 			 * 父组件模板的内容在父组件作用域内编译，子组件模板的内容在子组件模板内编译
 			 * 不支持多个相同slot属性的DOM插入到对应的slot标签中，一个slot只被使用一次
