@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+
+<html>
+	<head>
+		<meta charset="UTF-8" />
+		<title>使用store实现简单状态管理 - iVue2</title>
+		<script type="text/javascript" src="assets/js/vue.min.js"></script>
+	</head>
+	
+	<body>
+		<img src="https://cn.vuejs.org/images/state.png" />
+		
+		<div id="app"></div>
+		
+		<script type="text/javascript">
+			/**
+			 * 当访问数据对象时，一个Vue实例只是简单的代理访问
+			 * 需要被多个实例间共享的状态，可以简单地通过维护一份数据来实现共享
+			 * 所有store中state的改变，都放置在store自身的action中去管理
+			 * 组件不允许直接修改属于store实例的state，而应执行action来分发（dispatch）事件通知store去改变
+			 */
+			
+			//简单store模式
+			var store = {
+				debug: true,
+				state: {
+					message: 'Hello!'
+				},
+				setMessageAction(newVal) {
+					if(this.debug) {
+						console.log('setMessageAction triggered with', newVal);
+					}
+					this.state.message = newVal;
+				},
+				clearMessageAction() {
+					if(this.debug) {
+						console.log('clearMessageAction triggered');
+					}
+					this.state.message = '';
+				}
+			};
+			
+			var vm = new Vue({
+				el: '#app'
+			});
+		</script>
+	</body>
+</html>
