@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+
+<html>
+	<head>
+		<meta charset="UTF-8" />
+		<title>监听器 - iVue2</title>
+		<script type="text/javascript" src="assets/js/vue.min.js"></script>
+	</head>
+	
+	<body>
+		<div id="app">
+			<h3>{{ counter }}</h3>
+			<div>
+                <button @click="handleClick">Click</button>
+            </div>
+		</div>
+		
+		<script type="text/javascript">			
+			/**
+             * 监听器 watch
+             * 监听响应式数据的变化，并执行相关逻辑
+             * 在watch中可以执行任何逻辑，如函数节流，Ajax异步获取数据等
+             */
+			var vm = new Vue({
+				el: "#app",
+				data: {
+					counter: 0,
+                    meta: {
+                        ts: new Date().getTime(),
+                        rn: Math.random()
+                    },
+                    user: {
+                        fullname: {
+                            firstname: 'Wong',
+                            lastname: 'Neo'
+                        }
+                    }
+				},
+				watch: {
+					counter: function(val, oldVal) {
+                        console.log("Counter值从", oldVal, "变为", val);
+                    },
+                    // 监听对象属性
+                    "meta.ts": function(val, oldVal) {
+                        console.log("TS值从", oldVal, "变为", val);
+                    },
+                    "meta.rn": function(val, oldVal) {
+                        console.log("RN值从", oldVal, "变为", val);
+                    },
+                    // 深度监听
+                    user: {
+                        handler: function(val, oldVal) {
+                            console.log("User", val);
+                        },
+                        deep: true
+                    }
+				},
+                methods: {
+                    handleClick: function() {
+                        this.counter++;
+                        this.meta.ts = new Date().getTime();
+                        this.meta.rn = Math.random();
+                        this.user.fullname.lastname = "Song";
+                    }
+                }
+			});
+		</script>
+	</body>
+</html>
